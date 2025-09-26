@@ -1,0 +1,302 @@
+/* تأثيرات متقدمة محسنة للأداء - advanced-effects.css */
+
+/* 1. تأثيرات الزجاج والشفافية المحسنة */
+.glass-morphism {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+}
+
+.glass-card {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(255, 255, 255, 0.7) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* 2. تأثيرات الظلال المتقدمة */
+.advanced-shadow {
+    box-shadow: 
+        0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+        0 12.5px 10px rgba(0, 0, 0, 0.035),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+        0 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+.hover-shadow-lift {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-shadow-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.1),
+        0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+/* 3. تأثيرات التعويم والحركة */
+.floating-animation {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-12px) rotate(1deg); 
+    }
+}
+
+.floating-card {
+    animation: floatCard 8s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+    0%, 100% { 
+        transform: translateY(0px) scale(1); 
+    }
+    33% { 
+        transform: translateY(-8px) scale(1.02); 
+    }
+    66% { 
+        transform: translateY(-4px) scale(1.01); 
+    }
+}
+
+/* 4. تأثيرات الظهور التدريجي المحسنة */
+.stagger-fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: staggerFadeIn 0.8s ease forwards;
+}
+
+@keyframes staggerFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stagger-fade-in:nth-child(1) { animation-delay: 0.1s; }
+.stagger-fade-in:nth-child(2) { animation-delay: 0.2s; }
+.stagger-fade-in:nth-child(3) { animation-delay: 0.3s; }
+.stagger-fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+/* 5. تأثيرات النقر والتفاعل */
+.advanced-click-effect {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.advanced-click-effect:active {
+    transform: scale(0.96);
+}
+
+.ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 6. تأثيرات التدرج واللون */
+.gradient-glow {
+    background: linear-gradient(135deg, 
+        #667eea 0%, 
+        #764ba2 50%, 
+        #f093fb 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 7. تأثيرات البطاقات المتقدمة */
+.card-hover-3d {
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.card-hover-3d:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.15),
+        0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 8. تأثيرات التحميل والانتقال */
+.smooth-load {
+    animation: smoothLoad 1.2s ease-out;
+}
+
+@keyframes smoothLoad {
+    0% { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.95); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+.pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from {
+        box-shadow: 
+            0 0 20px rgba(102, 126, 234, 0.4),
+            0 0 40px rgba(102, 126, 234, 0.2);
+    }
+    to {
+        box-shadow: 
+            0 0 30px rgba(102, 126, 234, 0.6),
+            0 0 60px rgba(102, 126, 234, 0.3);
+    }
+}
+
+/* 9. تأثيرات الشريط التقدمي */
+.progress-glow {
+    background: linear-gradient(90deg, 
+        #667eea, 
+        #764ba2, 
+        #f093fb, 
+        #f5576c);
+    background-size: 300% 100%;
+    animation: progressFlow 3s ease-in-out infinite;
+}
+
+@keyframes progressFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* 10. تأثيرات الاستجابة لللمس */
+.tap-feedback {
+    transition: all 0.2s ease;
+}
+
+.tap-feedback:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+/* 11. تحسينات الأداء */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 12. تأثيرات خاصة للأنشطة */
+.activity-pulse {
+    animation: activityPulse 3s ease-in-out infinite;
+}
+
+@keyframes activityPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% { 
+        transform: scale(1.02); 
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.urgent-glow {
+    animation: urgentGlow 2s ease-in-out infinite;
+}
+
+@keyframes urgentGlow {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(239, 71, 111, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(239, 71, 111, 0.8);
+    }
+}
+
+/* 13. تأثيرات التنقل */
+.nav-slide {
+    animation: navSlide 0.6s ease-out;
+}
+
+@keyframes navSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 14. تأثيرات الإشعارات */
+.notification-pop {
+    animation: notificationPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes notificationPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 15. تأثيرات النصوص */
+.text-shimmer {
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.8), 
+        transparent);
+    background-size: 200% 100%;
+    animation: textShimmer 3s ease-in-out infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+@keyframes textShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}

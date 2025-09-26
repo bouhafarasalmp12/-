@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المسؤول - المفكرة اليومية</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+        
+        .storage-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 4px solid #667eea;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .admin-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-danger { 
+            background: linear-gradient(145deg, #dc3545, #c82333);
+            color: white;
+        }
+        
+        .btn-success { 
+            background: linear-gradient(145deg, #28a745, #218838);
+            color: white;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .user-list {
+            margin-top: 30px;
+        }
+        
+        .user-item {
+            background: #f8f9fa;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border-right: 3px solid #28a745;
+        }
+        
+        .message {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>🧩 لوحة تحكم مسؤول النظام</h1>
+            <p>إدارة بيانات التطبيق ومراقبة التخزين</p>
+        </div>
+        
+        <!-- معلومات التخزين -->
+        <div class="storage-info">
+            <h3>📊 إحصائيات التخزين الحالية:</h3>
+            <div id="storageInfo">جاري تحميل البيانات...</div>
+        </div>
+        
+        <!-- رسائل النظام -->
+        <div id="message" class="message"></div>
+        
+        <!-- أزرار التحكم -->
+        <div class="btn-group">
+            <button class="admin-btn btn-danger" onclick="clearAllData()">
+                🗑️ مسح جميع البيانات
+            </button>
+            <button class="admin-btn btn-success" onclick="resetDemoData()">
+                🔄 إعادة تعيين بيانات العرض
+            </button>
+            <button class="admin-btn btn-primary" onclick="viewAllUsers()">
+                👥 عرض جميع المستخدمين
+            </button>
+        </div>
+        
+        <!-- قائمة المستخدمين -->
+        <div id="userList" class="user-list" style="display: none;">
+            <h3>📋 قائمة المستخدمين المسجلين:</h3>
+            <div id="usersContainer"></div>
+        </div>
+        
+        <!-- روابط التنقل -->
+        <div class="btn-group">
+            <button class="admin-btn" onclick="location.href='login.html'">
+                ← العودة لتسجيل الدخول
+            </button>
+            <button class="admin-btn" onclick="location.href='index.html'">
+                🏠 الانتقال للواجهة الرئيسية
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // تحديث معلومات التخزين
+        function updateStorageInfo() {
+            const users = JSON.parse(localStorage.getItem('systemUsers') || '[]');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const activities = JSON.parse(localStorage.getItem('dailyActivities') || '[]');
+            
+            const storageInfo = document.getElementById('storageInfo');
+            storageInfo.innerHTML = `
+                <p><strong>👥 عدد المستخدمين:</strong> ${users.length} مستخدم</p>
+                <p><strong>🔐 المستخدم الحالي:</strong> ${currentUser ? currentUser.username + ' - ' + currentUser.department : 'لا يوجد'}</p>
+                <p><strong>📝 عدد الأنشطة:</strong> ${activities.length} نشاط</p>
+                <p><strong>🕒 آخر تحديث:</strong> ${new Date().toLocaleString('ar-EG')}</p>
+            `;
+        }
+        
+        // مسح جميع البيانات
+        function clearAllData() {
+            if (confirm('⚠️ هل أنت متأكد من مسح جميع البيانات؟\n\nهذا الإجراء سيحذف:\n- جميع المستخدمين\n- جميع الأنشطة\n- بيانات الجلسة\n\nلا يمكن التراجع عن هذا الإجراء!')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                showMessage('✅ تم مسح جميع البيانات بنجاح', 'success');
+                updateStorageInfo();
+                
+                // إعادة تحميل الصفحة بعد ثانيتين
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        }
+        
+        // إعادة تعيين بيانات العرض
+        function resetDemoData() {
+            if (confirm('🔄 هل تريد إعادة تعيين بيانات العرض التجريبية؟')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                // إعادة إنشاء البيانات الافتراضية
+                localStorage.setItem('lastReset', new Date().toISOString());
+                
+                showMessage('✅ تم إعادة تعيين البيانات بنجاح', 'success');
+                
+                // إعادة تحميل الصفحة بعد ثانية
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+        
+        // عرض جميع المستخدمين
+        function viewAllUsers() {
+            const users = JSON.parse(localStorage.getItem('systemUsers') || '[]');
+            const userList = document.getElementById('userList');
+            const usersContainer = document.getElementById('usersContainer');
+            
+            if (users.length === 0) {
+                usersContainer.innerHTML = '<p>لا يوجد مستخدمين مسجلين</p>';
+            } else {
+                usersContainer.innerHTML = users.map(user => `
+                    <div class="user-item">
+                        <strong>اسم المستخدم:</strong> ${user.username} | 
+                        <strong>القسم:</strong> ${user.department} | 
+                        <strong>الدور:</strong> ${user.role}
+                    </div>
+                `).join('');
+            }
+            
+            userList.style.display = 'block';
+        }
+        
+        // عرض الرسائل
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // تحديث المعلومات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStorageInfo();
+            
+            // تحديث تلقائي كل 3 ثواني
+            setInterval(updateStorageInfo, 3000);
+            
+            console.log('🧩 لوحة المسؤول جاهزة للاستخدام');
+            console.log('📁 البيانات الحالية:', {
+                users: JSON.parse(localStorage.getItem('systemUsers') || '[]').length,
+                currentUser: localStorage.getItem('currentUser'),
+                activities: JSON.parse(localStorage.getItem('dailyActivities') || '[]').length
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأرشيف والأنشطة القادمة - نظام إدارة الأنشطة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .archive-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid;
+        }
+
+        .upcoming-section {
+            border-left-color: var(--primary-color);
+        }
+
+        .archive-section {
+            border-left-color: var(--text-light);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activities-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .archive-item, .upcoming-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-right: 3px solid;
+            transition: all 0.3s ease;
+        }
+
+        .archive-item:hover, .upcoming-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .importance-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-red { background: #fff5f5; color: #ff4757; }
+        .badge-orange { background: #fff9e6; color: #ffa502; }
+        .badge-green { background: #f0fff4; color: #2ed573; }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .archive-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-archive"></i> الأرشيف والأنشطة القادمة</h1>
+            <div class="header-actions">
+                <a href="dashboard.html" class="btn-3d btn-secondary">
+                    <i class="fas fa-arrow-right"></i> العودة لللوحة
+                </a>
+            </div>
+        </header>
+
+        <div class="filter-controls">
+            <select id="unitFilter" class="filter-select">
+                <option value="">جميع الجهات</option>
+            </select>
+            <select id="dateFilter" class="filter-select">
+                <option value="">جميع التواريخ</option>
+                <option value="today">اليوم</option>
+                <option value="week">هذا الأسبوع</option>
+                <option value="month">هذا الشهر</option>
+            </select>
+            <input type="text" id="searchFilter" class="filter-select" placeholder="بحث في النشاطات...">
+        </div>
+
+        <div class="archive-container">
+            <!-- قسم الأنشطة القادمة -->
+            <div class="section-card upcoming-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-calendar-plus"></i> الأنشطة القادمة</h3>
+                    <span class="badge" id="upcomingCount">0</span>
+                </div>
+                <div id="upcomingActivities" class="activities-list">
+                    <!-- سيتم تعبئتها بالأنشطة القادمة -->
+                </div>
+            </div>
+
+            <!-- قسم الأرشيف -->
+            <div class="section-card archive-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-archive"></i> الأرشيف</h3>
+                    <span class="badge" id="archiveCount">0</span>
+                </div>
+                <div id="archiveActivities" class="activities-list">
+                    <!-- سيتم تعبئتها بالأنشطة المؤرشفة -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/archive.js"></script>
+</body>
+</html>
